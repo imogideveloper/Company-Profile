@@ -15,32 +15,33 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Imogi Indonesia - Custom Software Development & Digital Transformation",
+  title: "IMOGI - Implementor ERPNext Terpercaya di Indonesia | PT. Inovasi Terbaik Bangsa",
   description:
-    "Imogi Indonesia helps organizations transform their business processes through custom software development, ERP solutions, and innovative digital technologies.",
+    "IMOGI adalah implementor ERPNext terpercaya untuk bisnis konstruksi, transportasi, dan otomotif Indonesia. Solusi ERP cerdas & otomatis untuk fleet management, bengkel, dan manajemen proyek.",
   keywords: [
-    "Imogi Indonesia",
-    "Software House",
-    "Custom Software",
-    "ERP Solutions",
-    "Digital Transformation",
-    "Business Process Automation",
-    "Web Development",
-    "Mobile App Development",
+    "IMOGI",
+    "ERPNext",
+    "ERP Indonesia",
+    "Fleet Management",
+    "Manajemen Proyek Konstruksi",
+    "Bengkel Management",
+    "PT Inovasi Terbaik Bangsa",
+    "Implementor ERPNext",
+    "Open Source ERP",
   ],
-  authors: [{ name: "Imogi Indonesia" }],
+  authors: [{ name: "PT. Inovasi Terbaik Bangsa" }],
   openGraph: {
-    title: "Imogi Indonesia - Custom Software Development & Digital Transformation",
+    title: "IMOGI - Implementor ERPNext Terpercaya di Indonesia",
     description:
-      "Building digital solutions that drive business growth. Custom software, ERP, and digital transformation services.",
-    siteName: "Imogi Indonesia",
+      "Solusi ERPNext cerdas & otomatis untuk bisnis konstruksi, transportasi, dan otomotif Indonesia.",
+    siteName: "IMOGI",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Imogi Indonesia - Custom Software Development & Digital Transformation",
+    title: "IMOGI - Implementor ERPNext Terpercaya di Indonesia",
     description:
-      "Building digital solutions that drive business growth. Custom software, ERP, and digital transformation services.",
+      "Solusi ERPNext cerdas & otomatis untuk bisnis konstruksi, transportasi, dan otomotif Indonesia.",
   },
 };
 
@@ -50,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >

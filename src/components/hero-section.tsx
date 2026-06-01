@@ -1,247 +1,224 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ChevronRight, Play, Monitor, ShieldCheck, Globe } from 'lucide-react';
+
+const slides = [
+  {
+    headline: 'Fleet Management Cerdas & Otomatis',
+    subtitle: 'Monitoring armada secara real-time, kontrol BBM, dispatch otomatis, dan maintenance reminder — semua dalam satu platform ERPNext.',
+  },
+  {
+    headline: 'Manajemen Proyek Konstruksi Terintegrasi',
+    subtitle: 'Dari perencanaan RAB, penjadwalan, pengadaan material, hingga progress claim dan billing — terhubung tanpa celah.',
+  },
+  {
+    headline: 'Operasional Bengkel Digital & Efisien',
+    subtitle: 'Antrian digital, inventory suku cadang, manajemen mekanik, dan billing otomatis untuk bengkel modern.',
+  },
+];
+
+const badges = [
+  { icon: Monitor, label: 'Real-time Monitoring' },
+  { icon: ShieldCheck, label: 'Data Terjamin' },
+  { icon: Globe, label: 'Akses dari Mana Saja' },
+];
 
 export default function HeroSection() {
-  const handleScroll = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const [current, setCurrent] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
   return (
     <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      id="beranda"
+      className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)' }}
     >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-imogi-primary via-imogi-primary/95 to-imogi-secondary/30" />
+      {/* Background pattern */}
+      <div className="absolute inset-0 dot-grid opacity-30" />
 
-      {/* Dot grid pattern */}
-      <div className="absolute inset-0 dot-grid opacity-60" />
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-10 w-72 h-72 bg-imogi-secondary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 bg-imogi-accent/5 rounded-full blur-3xl" />
 
-      {/* Gradient orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-imogi-secondary/20 blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-imogi-accent/15 blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8 w-full">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 md:pt-32 md:pb-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Content */}
           <div className="text-center lg:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <span className="inline-block px-4 py-1.5 rounded-full bg-imogi-secondary/20 border border-imogi-secondary/30 text-imogi-accent text-sm font-medium mb-6">
-                Software House Indonesia
-              </span>
-            </motion.div>
+            {/* Badges */}
+            <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-6">
+              {badges.map((badge) => (
+                <Badge
+                  key={badge.label}
+                  variant="outline"
+                  className="bg-white/10 border-white/20 text-white/90 gap-1.5 px-3 py-1 text-xs"
+                >
+                  <badge.icon className="w-3.5 h-3.5 text-imogi-accent" />
+                  {badge.label}
+                </Badge>
+              ))}
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
-            >
-              Building Digital Solutions That Drive{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-imogi-accent to-imogi-secondary">
-                Business Growth
-              </span>
-            </motion.h1>
+            {/* Carousel Headline */}
+            <div className="relative h-[120px] sm:h-[100px] mb-6">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0"
+                >
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                    {slides[current].headline}
+                  </h1>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 text-base md:text-lg text-slate-300 max-w-xl mx-auto lg:mx-0"
-            >
-              Imogi Indonesia helps organizations transform their business
-              processes through custom software development, ERP solutions, and
-              innovative digital technologies.
-            </motion.p>
+            {/* Subtitle */}
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={current}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-base sm:text-lg text-white/70 mb-8 max-w-xl mx-auto lg:mx-0"
+              >
+                {slides[current].subtitle}
+              </motion.p>
+            </AnimatePresence>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start"
-            >
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-3 justify-center lg:justify-start mb-8">
               <Button
                 size="lg"
-                className="bg-imogi-secondary hover:bg-imogi-secondary/90 text-white px-8"
-                onClick={() => handleScroll("#contact")}
+                className="bg-imogi-secondary hover:bg-imogi-secondary/90 text-white gap-2 h-12 px-6"
+                asChild
               >
-                Discuss Your Project
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <a href="#kontak">
+                  Demo Gratis
+                  <ChevronRight className="w-4 h-4" />
+                </a>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-slate-400 text-white hover:bg-white/10 px-8"
-                onClick={() => handleScroll("#services")}
+                className="border-white/30 text-white hover:bg-white/10 gap-2 h-12 px-6"
+                asChild
               >
-                View Our Services
+                <a href="#layanan">
+                  <Play className="w-4 h-4" />
+                  Lihat Demo
+                </a>
               </Button>
-            </motion.div>
+            </div>
+
+            {/* Carousel Dots */}
+            <div className="flex gap-2 justify-center lg:justify-start">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrent(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    idx === current
+                      ? 'w-8 bg-imogi-secondary'
+                      : 'w-2 bg-white/30 hover:bg-white/50'
+                  }`}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Right: Floating Dashboard Elements */}
-          <div className="hidden lg:block relative">
-            <div className="relative w-full h-[480px]">
-              {/* Main Dashboard Card */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="absolute top-0 left-0 w-80 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-4 shadow-2xl"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-white text-sm font-medium">Revenue Dashboard</span>
-                  <span className="text-imogi-accent text-xs">Live</span>
+          {/* Right - Dashboard Illustration */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="relative hidden lg:block"
+          >
+            <div className="relative">
+              {/* Main dashboard card */}
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-2xl">
+                {/* Top bar */}
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-400" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                  <div className="w-3 h-3 rounded-full bg-green-400" />
+                  <div className="ml-4 h-6 bg-white/10 rounded flex-1" />
                 </div>
-                <div className="flex items-end gap-1.5 h-24">
-                  {[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88].map((h, i) => (
-                    <motion.div
-                      key={i}
-                      className="flex-1 rounded-sm bg-gradient-to-t from-imogi-secondary to-imogi-accent"
-                      initial={{ height: 0 }}
-                      animate={{ height: `${h}%` }}
-                      transition={{ duration: 0.6, delay: 0.8 + i * 0.05 }}
-                    />
-                  ))}
-                </div>
-                <div className="mt-3 flex justify-between text-xs text-slate-400">
-                  <span>Jan</span>
-                  <span>Jun</span>
-                  <span>Dec</span>
-                </div>
-              </motion.div>
-
-              {/* Code Snippet Card */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.9 }}
-                className="absolute top-8 right-0 w-64 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-4 shadow-2xl"
-              >
-                <div className="flex items-center gap-1.5 mb-3">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                </div>
-                <div className="space-y-1.5 font-mono text-xs">
-                  <div>
-                    <span className="text-purple-400">const</span>{" "}
-                    <span className="text-blue-300">solution</span>{" "}
-                    <span className="text-white">=</span>{" "}
-                    <span className="text-yellow-300">await</span>{" "}
-                    <span className="text-green-300">imogi</span>
-                    <span className="text-white">.</span>
-                    <span className="text-blue-300">build</span>
-                    <span className="text-white">({"{"}</span>
+                {/* Dashboard content mock */}
+                <div className="space-y-3">
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { label: 'Armada Aktif', value: '48', color: 'bg-imogi-secondary' },
+                      { label: 'Dalam Perjalanan', value: '32', color: 'bg-imogi-accent' },
+                      { label: 'Maintenance', value: '5', color: 'bg-amber-500' },
+                    ].map((stat) => (
+                      <div key={stat.label} className="bg-white/5 rounded-lg p-3">
+                        <div className={`w-8 h-1 ${stat.color} rounded mb-2`} />
+                        <div className="text-2xl font-bold text-white">{stat.value}</div>
+                        <div className="text-xs text-white/50">{stat.label}</div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="pl-4">
-                    <span className="text-blue-300">erp</span>
-                    <span className="text-white">:</span>{" "}
-                    <span className="text-orange-300">true</span>
-                    <span className="text-white">,</span>
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-blue-300">cloud</span>
-                    <span className="text-white">:</span>{" "}
-                    <span className="text-orange-300">true</span>
-                  </div>
-                  <div>
-                    <span className="text-white">{"}"});</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Stats Card */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.2 }}
-                className="absolute bottom-0 left-8 w-72 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-4 shadow-2xl"
-              >
-                <span className="text-white text-sm font-medium">Performance</span>
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  {[
-                    { label: "Uptime", value: "99.9%" },
-                    { label: "Speed", value: "< 200ms" },
-                    { label: "Users", value: "10K+" },
-                    { label: "Satisfaction", value: "98%" },
-                  ].map((stat, i) => (
-                    <div key={i} className="text-center p-2 rounded-lg bg-white/5">
-                      <div className="text-imogi-accent text-sm font-bold">{stat.value}</div>
-                      <div className="text-slate-400 text-xs mt-0.5">{stat.label}</div>
+                  {/* Chart mock */}
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <div className="text-xs text-white/50 mb-3">Utilisasi Armada</div>
+                    <div className="flex items-end gap-1 h-20">
+                      {[40, 65, 45, 80, 55, 70, 90, 60, 75, 85, 50, 95].map((h, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 bg-imogi-secondary/60 rounded-t hover:bg-imogi-secondary transition-colors"
+                          style={{ height: `${h}%` }}
+                        />
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Mini Table Card */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 1.5 }}
-                className="absolute bottom-12 right-4 w-56 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-3 shadow-2xl"
-              >
-                <span className="text-white text-xs font-medium">Active Projects</span>
-                <div className="mt-2 space-y-1.5">
-                  {["ERP Module", "CRM Portal", "Mobile App"].map((item, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs">
-                      <span className="text-slate-300">{item}</span>
-                      <span className={`px-1.5 py-0.5 rounded text-[10px] ${
-                        i === 0 ? "bg-green-500/20 text-green-400" :
-                        i === 1 ? "bg-imogi-secondary/20 text-imogi-accent" :
-                        "bg-yellow-500/20 text-yellow-400"
-                      }`}>
-                        {i === 0 ? "Active" : i === 1 ? "In Progress" : "Review"}
-                      </span>
+                  </div>
+                  {/* Map mock */}
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <div className="text-xs text-white/50 mb-2">Live Tracking</div>
+                    <div className="h-16 bg-imogi-secondary/10 rounded flex items-center justify-center">
+                      <Globe className="w-8 h-8 text-imogi-accent/50" />
                     </div>
-                  ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating notification */}
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -top-4 -right-4 bg-white/15 backdrop-blur-md border border-white/20 rounded-xl p-3 shadow-lg"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <ShieldCheck className="w-4 h-4 text-green-400" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-white">Data Terjamin</div>
+                    <div className="text-[10px] text-white/50">Enkripsi end-to-end</div>
+                  </div>
                 </div>
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <button
-          onClick={() => handleScroll("#about")}
-          className="flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
-          aria-label="Scroll down"
-        >
-          <span className="text-xs">Scroll Down</span>
-          <ArrowDown className="h-4 w-4" />
-        </button>
-      </motion.div>
     </section>
   );
 }

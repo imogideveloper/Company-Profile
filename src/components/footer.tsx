@@ -1,141 +1,108 @@
-"use client";
+'use client';
 
-import { Linkedin, Twitter, Instagram, Github } from "lucide-react";
+import { motion } from 'framer-motion';
+import { MapPin } from 'lucide-react';
 
-const serviceLinks = [
-  "ERP Solutions",
-  "Custom Software",
-  "Web Development",
-  "Mobile Apps",
-  "Cloud Solutions",
-  "IT Consulting",
-];
-
-const companyLinks = [
-  { label: "About", href: "#about" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Careers", href: "#contact" },
-  { label: "Contact", href: "#contact" },
-];
-
-const socialLinks = [
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Github, href: "#", label: "GitHub" },
-];
+const footerLinks = {
+  layanan: {
+    title: 'LAYANAN',
+    links: [
+      { label: 'IMOGI Konstruksi', href: '#layanan' },
+      { label: 'IMOGI Fleet', href: '#layanan' },
+      { label: 'IMOGI Bengkel', href: '#layanan' },
+      { label: 'Konsultasi ERP', href: '#kontak' },
+    ],
+  },
+  perusahaan: {
+    title: 'PERUSAHAAN',
+    links: [
+      { label: 'Tentang Kami', href: '#tentang' },
+      { label: 'Tim Kami', href: '#tentang' },
+      { label: 'Klien', href: '#klien' },
+      { label: 'Karir', href: '#kontak' },
+    ],
+  },
+  dukungan: {
+    title: 'DUKUNGAN',
+    links: [
+      { label: 'Pusat Bantuan', href: '#faq' },
+      { label: 'Dokumentasi', href: '#faq' },
+      { label: 'Status Layanan', href: '#' },
+      { label: 'Hubungi Kami', href: '#kontak' },
+    ],
+  },
+  legal: {
+    title: 'LEGAL',
+    links: [
+      { label: 'Kebijakan Privasi', href: '#' },
+      { label: 'Syarat & Ketentuan', href: '#' },
+      { label: 'Service Level Agreement', href: '#' },
+    ],
+  },
+};
 
 export default function Footer() {
-  const handleNavClick = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <footer className="bg-imogi-primary text-white">
-      <div className="px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-12 md:py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Column 1: Logo & Description */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
+    <footer
+      className="pt-16 pb-8"
+      style={{ background: 'linear-gradient(180deg, #0F172A 0%, #0a0f1a 100%)' }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-12">
+          {/* Brand */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 rounded-lg bg-imogi-secondary flex items-center justify-center">
                 <span className="text-white font-bold text-lg">I</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-lg leading-tight">Imogi</span>
-                <span className="text-[10px] leading-tight text-slate-400 tracking-wider uppercase">
-                  Indonesia
-                </span>
+              <div>
+                <div className="font-bold text-lg text-white">IMOGI</div>
+                <div className="text-[10px] text-white/50">PT. Inovasi Terbaik Bangsa</div>
               </div>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              A leading software house specializing in custom software development,
-              ERP solutions, and digital transformation for businesses across
-              Indonesia.
+            <p className="text-white/60 text-sm leading-relaxed mb-4">
+              Implementor ERPNext terpercaya untuk bisnis konstruksi, transportasi, dan otomotif Indonesia.
             </p>
-            <div className="flex gap-3">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  aria-label={social.label}
-                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-imogi-secondary transition-colors duration-300"
-                >
-                  <social.icon className="h-4 w-4" />
-                </a>
-              ))}
+            <div className="flex items-center gap-2 text-white/50 text-sm">
+              <MapPin className="w-4 h-4" />
+              Jakarta, Indonesia
             </div>
           </div>
 
-          {/* Column 2: Services */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Services</h3>
-            <ul className="space-y-2.5">
-              {serviceLinks.map((link, index) => (
-                <li key={index}>
-                  <a
-                    href="#services"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick("#services");
-                    }}
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: Company */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Company</h3>
-            <ul className="space-y-2.5">
-              {companyLinks.map((link, index) => (
-                <li key={index}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(link.href);
-                    }}
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 4: Contact */}
-          <div>
-            <h3 className="font-semibold text-white mb-4">Contact</h3>
-            <ul className="space-y-2.5 text-sm text-slate-400">
-              <li>info@imogi.co.id</li>
-              <li>+62 21 1234 5678</li>
-              <li>+62 812 3456 7890</li>
-              <li>Jakarta, Indonesia</li>
-            </ul>
-          </div>
+          {/* Links */}
+          {Object.values(footerLinks).map((section) => (
+            <div key={section.title}>
+              <h3 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-4">
+                {section.title}
+              </h3>
+              <ul className="space-y-2.5">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-white/50 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="px-4 md:px-6 lg:px-8 max-w-7xl mx-auto py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-sm text-slate-400">
-            &copy; 2026 Imogi Indonesia. All rights reserved.
+        {/* Bottom */}
+        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-white/40">
+            © {new Date().getFullYear()} PT. Inovasi Terbaik Bangsa. Hak cipta dilindungi.
           </p>
-          <div className="flex gap-4 text-sm text-slate-400">
-            <a href="#" className="hover:text-white transition-colors">
-              Privacy Policy
+          <div className="flex gap-6">
+            <a href="#" className="text-sm text-white/40 hover:text-white/70 transition-colors">
+              Kebijakan Privasi
             </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Terms of Service
+            <a href="#" className="text-sm text-white/40 hover:text-white/70 transition-colors">
+              Syarat & Ketentuan
             </a>
           </div>
         </div>

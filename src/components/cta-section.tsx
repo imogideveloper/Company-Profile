@@ -1,72 +1,56 @@
-"use client";
+'use client';
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { CalendarCheck, MessageCircle, ChevronRight } from 'lucide-react';
 
 export default function CtaSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  const handleScroll = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <section className="py-20 lg:py-28 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-imogi-primary via-imogi-secondary/80 to-imogi-primary" />
+    <section
+      className="py-20 md:py-28 relative overflow-hidden"
+      style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)' }}
+    >
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-imogi-secondary/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-imogi-accent/5 rounded-full blur-3xl" />
 
-      {/* Animated orbs */}
-      <motion.div
-        className="absolute top-0 right-0 w-96 h-96 rounded-full bg-imogi-accent/10 blur-3xl"
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.2, 0.4, 0.2],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-imogi-secondary/15 blur-3xl"
-        animate={{
-          scale: [1.3, 1, 1.3],
-          opacity: [0.15, 0.3, 0.15],
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      <div ref={ref} className="relative z-10 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Ready to Build Your Next Digital Solution?
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+            Konsultasi Gratis ERPNext
+            <br />
+            untuk Bisnis Anda
           </h2>
-          <p className="mt-6 text-slate-300 text-base md:text-lg max-w-2xl mx-auto">
-            Partner with Imogi Indonesia to create innovative software that
-            empowers your business and drives growth.
+          <p className="text-white/70 text-lg mb-10 max-w-2xl mx-auto">
+            Dapatkan analisis kebutuhan dan rekomendasi solusi ERP dari tim ahli kami.
+            Tanpa komitmen, tanpa biaya.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-white text-imogi-primary hover:bg-white/90 px-8"
-              onClick={() => handleScroll("#contact")}
+              className="bg-imogi-secondary hover:bg-imogi-secondary/90 text-white gap-2 h-13 px-8 text-base"
+              asChild
             >
-              Start a Project
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <a href="#kontak">
+                <CalendarCheck className="w-5 h-5" />
+                Jadwalkan Demo
+              </a>
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-white/30 text-white hover:bg-white/10 px-8"
-              onClick={() => handleScroll("#contact")}
+              className="border-white/30 text-white hover:bg-white/10 gap-2 h-13 px-8 text-base"
+              asChild
             >
-              Contact Us
+              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-5 h-5" />
+                WhatsApp Langsung
+              </a>
             </Button>
           </div>
         </motion.div>

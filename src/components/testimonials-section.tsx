@@ -1,175 +1,147 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useCallback, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
-import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
-const testimonials = [
+interface Testimonial {
+  name: string;
+  title: string;
+  company: string;
+  initials: string;
+  color: string;
+  content: string;
+}
+
+const testimonials: Testimonial[] = [
   {
-    name: "Budi Santoso",
-    company: "PT Manufaktur Indonesia",
-    role: "CEO",
-    quote:
-      "Imogi Indonesia transformed our entire production planning process with their ERP solution. The system has reduced our operational costs by 30% and improved efficiency across all departments.",
-    rating: 5,
-    initials: "BS",
+    name: 'Budi Santoso',
+    title: 'Direktur Operasional',
+    company: 'PT Konstruksi Mandiri',
+    initials: 'BS',
+    color: 'bg-amber-500',
+    content:
+      'Setelah implementasi IMOGI Konstruksi, proses RAB dan progress claim kami jauh lebih cepat dan akurat. Tidak ada lagi kesalahan hitung manual yang merugikan perusahaan.',
   },
   {
-    name: "Sari Dewi",
-    company: "RetailHub Group",
-    role: "CTO",
-    quote:
-      "The POS platform built by Imogi has been a game-changer for our retail operations. Their team understood our complex requirements and delivered a solution that exceeded our expectations.",
-    rating: 5,
-    initials: "SD",
+    name: 'Siti Rahayu',
+    title: 'General Manager',
+    company: 'PT Armada Jaya',
+    initials: 'SR',
+    color: 'bg-imogi-secondary',
+    content:
+      'IMOGI Fleet mengubah cara kami mengelola armada. Dispatch yang dulunya pakai WhatsApp sekarang otomatis, dan kami bisa tracking GPS setiap unit secara real-time.',
   },
   {
-    name: "Ahmad Rizki",
-    company: "LogiTrack Express",
-    role: "Operations Director",
-    quote:
-      "Working with Imogi on our fleet management app was a seamless experience. Their agile approach meant we could adapt features quickly based on driver feedback. Highly recommended!",
-    rating: 5,
-    initials: "AR",
+    name: 'Ahmad Wijaya',
+    title: 'Pemilik',
+    company: 'PT Bengkel Prima',
+    initials: 'AW',
+    color: 'bg-emerald-500',
+    content:
+      'Sistem antrian digital dan inventory suku cadang dari IMOGI Bengkel sangat membantu. Mekanik kami lebih produktif dan pelanggan lebih puas dengan estimasi biaya yang transparan.',
+  },
+  {
+    name: 'Dewi Kusuma',
+    title: 'CFO',
+    company: 'PT Infrastruktur Nusantara',
+    initials: 'DK',
+    color: 'bg-purple-500',
+    content:
+      'Biaya implementasi yang terjangkau dan tanpa lisensi tahunan sangat membantu cash flow perusahaan. ROI terasa dalam 3 bulan pertama setelah Go-Live.',
   },
 ];
 
 export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % testimonials.length);
-  }, []);
-
-  const prev = useCallback(() => {
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  }, []);
-
-  const resetInterval = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(next, 5000);
-  }, [next]);
-
-  useEffect(() => {
-    intervalRef.current = setInterval(next, 5000);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [next]);
-
-  const handleNext = () => {
-    next();
-    resetInterval();
-  };
-
-  const handlePrev = () => {
-    prev();
-    resetInterval();
-  };
+  const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
+  const next = () => setCurrent((c) => (c + 1) % testimonials.length);
 
   return (
-    <section className="py-20 lg:py-28">
-      <div ref={ref} className="px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="py-20 md:py-28 bg-muted/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-imogi-secondary font-semibold text-sm uppercase tracking-wider">
-            Testimonials
-          </span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground">
-            What Our Clients Say
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Apa Kata Mereka
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Don&apos;t just take our word for it — hear from the businesses we&apos;ve
-            helped transform.
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Testimoni dari klien yang telah merasakan manfaat implementasi ERPNext bersama IMOGI
           </p>
-          <div className="mt-4 w-16 h-1 bg-imogi-secondary mx-auto rounded-full" />
         </motion.div>
 
         <div className="max-w-3xl mx-auto relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.4 }}
-              className="bg-card rounded-xl p-6 md:p-8 border border-border text-center"
+              className="bg-card border border-border rounded-2xl p-8 md:p-10"
             >
-              <Quote className="h-10 w-10 text-imogi-secondary/20 mx-auto mb-4" />
-              <p className="text-muted-foreground text-base md:text-lg leading-relaxed italic">
-                &ldquo;{testimonials[current].quote}&rdquo;
+              <Quote className="w-10 h-10 text-imogi-secondary/20 mb-6" />
+              <p className="text-foreground leading-relaxed mb-8 text-base md:text-lg">
+                &ldquo;{testimonials[current].content}&rdquo;
               </p>
-              <div className="flex items-center justify-center gap-1 mt-4">
-                {Array.from({ length: testimonials[current].rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-              <div className="mt-6 flex flex-col items-center gap-2">
-                <div className="w-12 h-12 rounded-full bg-imogi-secondary flex items-center justify-center">
+              <div className="flex items-center gap-4">
+                <div
+                  className={`w-12 h-12 rounded-full ${testimonials[current].color} flex items-center justify-center`}
+                >
                   <span className="text-white font-bold text-sm">
                     {testimonials[current].initials}
                   </span>
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground">
+                  <div className="font-semibold text-foreground">
                     {testimonials[current].name}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonials[current].role},{" "}
-                    {testimonials[current].company}
-                  </p>
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {testimonials[current].title}, {testimonials[current].company}
+                  </div>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="flex items-center justify-center gap-4 mt-6">
+          <div className="flex items-center justify-center gap-4 mt-8">
             <Button
               variant="outline"
               size="icon"
-              onClick={handlePrev}
-              className="rounded-full"
-              aria-label="Previous testimonial"
+              onClick={prev}
+              className="h-10 w-10 rounded-full"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="w-4 h-4" />
             </Button>
             <div className="flex gap-2">
-              {testimonials.map((_, i) => (
+              {testimonials.map((_, idx) => (
                 <button
-                  key={i}
-                  onClick={() => {
-                    setCurrent(i);
-                    resetInterval();
-                  }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "bg-imogi-secondary w-8"
-                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  key={idx}
+                  onClick={() => setCurrent(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    idx === current
+                      ? 'w-8 bg-imogi-secondary'
+                      : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'
                   }`}
-                  aria-label={`Go to testimonial ${i + 1}`}
+                  aria-label={`Testimoni ${idx + 1}`}
                 />
               ))}
             </div>
             <Button
               variant="outline"
               size="icon"
-              onClick={handleNext}
-              className="rounded-full"
-              aria-label="Next testimonial"
+              onClick={next}
+              className="h-10 w-10 rounded-full"
             >
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
