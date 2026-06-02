@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const WA_NUMBER = '6281234567890'; // ⚠️ Ganti dengan nomor WhatsApp asli IMOGI
+const WA_NUMBER = '6285311552401';
 
 export default function WhatsAppFloat() {
   const [tooltip, setTooltip] = useState(true);
