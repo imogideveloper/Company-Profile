@@ -16,7 +16,7 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    name: 'Ahmad Wijaya',
+    name: 'Joko Purnomo',
     title: 'Pemilik',
     company: 'PT Pratama Putra Otomotif',
     initials: 'AW',
@@ -25,7 +25,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
   },
   {
-    name: 'Budi Santoso',
+    name: 'Yugo Risna Atmaja',
     title: 'Direktur Operasional',
     company: 'PT Tiga Perkasa Teknik',
     initials: 'BS',
@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     rating: 5,
   },
   {
-    name: 'Siti Rahayu',
+    name: 'Sudirno Bejo Selawase',
     title: 'General Manager',
     company: 'PT Pemuda Patriot Rentalindo',
     initials: 'SR',
