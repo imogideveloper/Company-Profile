@@ -54,7 +54,7 @@ export default function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="/logo.png"
+                src="/logo-rmvbg.png"
                 alt="IMOGI Logo"
                 className="h-9 w-auto"
               />
