@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +20,7 @@ interface Product {
   subtitle: string;
   description: string;
   icon: React.ElementType;
+  image: string;
   color: string;
   bgColor: string;
   borderColor: string;
@@ -37,6 +39,7 @@ const products: Product[] = [
     description:
       'Implementasi ERPNext yang dikustomisasi untuk industri konstruksi — menghubungkan seluruh proses proyek dari perencanaan RAB, penjadwalan, pengadaan material, hingga serah terima dan billing.',
     icon: Building2,
+    image: '/kontruksi.png',
     color: 'text-amber-600',
     bgColor: 'bg-amber-50',
     borderColor: 'border-amber-200',
@@ -64,6 +67,7 @@ const products: Product[] = [
     description:
       'ERPNext yang dikustomisasi untuk mengelola armada towing & rental — tracking GPS real-time, scheduling dispatch, kontrol BBM, dan maintenance reminder otomatis.',
     icon: Truck,
+    image: '/fleet.jpeg',
     color: 'text-imogi-secondary',
     bgColor: 'bg-blue-50',
     borderColor: 'border-blue-200',
@@ -91,6 +95,7 @@ const products: Product[] = [
     description:
       'ERPNext yang dikustomisasi untuk operasional bengkel — antrian digital, inventory suku cadang, manajemen mekanik, billing otomatis, hingga riwayat servis pelanggan.',
     icon: Wrench,
+    image: '/bengkel.jpeg',
     color: 'text-emerald-600',
     bgColor: 'bg-emerald-50',
     borderColor: 'border-emerald-200',
@@ -111,6 +116,7 @@ const products: Product[] = [
     ],
     flow: ['Antrian', 'Estimasi', 'Servis', 'Billing', 'Riwayat'],
   },
+
 ];
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
@@ -126,23 +132,35 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
     >
       <div className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-imogi-secondary/5 transition-all duration-500">
         <div className="flex flex-col lg:flex-row">
-          {/* Left - Icon area */}
-          <div className={`lg:w-72 p-6 lg:p-8 flex flex-col items-center justify-center ${product.bgColor} dark:opacity-90`}>
-            <div className={`w-20 h-20 rounded-2xl ${product.bgColor} dark:bg-white/10 flex items-center justify-center mb-4`}>
-              <Icon className={`w-10 h-10 ${product.color}`} />
+          {/* Left - Full image with overlay */}
+          <div className="lg:w-80 relative w-full h-56 lg:h-auto overflow-hidden">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 320px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="absolute bottom-4 left-4 right-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className={`w-8 h-8 rounded-lg ${product.bgColor} dark:bg-white/10 flex items-center justify-center shadow`}>
+                  <Icon className={`w-4 h-4 ${product.color}`} />
+                </div>
+                <Badge
+                  variant="outline"
+                  className="border-white/30 text-white bg-white/10 backdrop-blur-sm"
+                >
+                  {product.badge}
+                </Badge>
+              </div>
+              <h3 className="text-xl font-bold text-white">
+                {product.name}
+              </h3>
+              <p className="text-sm text-white/80 mt-0.5">
+                {product.subtitle}
+              </p>
             </div>
-            <Badge
-              variant="outline"
-              className={`${product.borderColor} ${product.color} mb-3`}
-            >
-              {product.badge}
-            </Badge>
-            <h3 className="text-xl font-bold text-foreground text-center">
-              {product.name}
-            </h3>
-            <p className="text-sm text-muted-foreground text-center mt-1">
-              {product.subtitle}
-            </p>
           </div>
 
           {/* Right - Content area */}
