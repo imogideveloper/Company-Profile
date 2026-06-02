@@ -148,7 +148,7 @@ export default function FaqSection() {
   const rightItems = filteredItems.slice(midPoint);
 
   return (
-    <section id="faq" className="py-20 md:py-28">
+    <section id="faq" className="py-10 md:py-14">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

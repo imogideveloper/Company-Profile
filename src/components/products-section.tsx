@@ -235,7 +235,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
 export default function ProductsSection() {
   return (
-    <section id="layanan" className="py-20 md:py-28">
+    <section id="layanan" className="py-10 md:py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

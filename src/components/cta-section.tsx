@@ -7,7 +7,7 @@ import { CalendarCheck, MessageCircle, ChevronRight } from 'lucide-react';
 export default function CtaSection() {
   return (
     <section
-      className="py-20 md:py-28 relative overflow-hidden"
+      className="py-10 md:py-14 relative overflow-hidden"
       style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)' }}
     >
       {/* Decorative elements */}

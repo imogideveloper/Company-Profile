@@ -36,12 +36,9 @@ export default function ContactSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
+  const buildMessage = () => {
     const solusiText = solutionLabels[form.solusi] || '-';
-
-    const message = `Halo, saya ingin konsultasi mengenai layanan IMOGI.
+    return `Halo, saya ingin konsultasi mengenai layanan IMOGI.
 
 *Nama:* ${form.nama || '-'}
 *Perusahaan:* ${form.perusahaan || '-'}
@@ -51,164 +48,183 @@ export default function ContactSection() {
 *Pesan:* ${form.pesan || '-'}
 
 Terima kasih.`;
+  };
 
-    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(buildMessage())}`;
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const handleEmailSubmit = () => {
+    const solusiText = solutionLabels[form.solusi] || '-';
+    const subject = encodeURIComponent(`Konsultasi ERPNext - ${form.perusahaan || form.nama || 'Calon Klien'}`);
+    const body = encodeURIComponent(
+      `Nama: ${form.nama || '-'}\nPerusahaan: ${form.perusahaan || '-'}\nEmail: ${form.email || '-'}\nTelepon: ${form.telepon || '-'}\nSolusi: ${solusiText}\n\nPesan:\n${form.pesan || '-'}`
+    );
+    window.open(`mailto:imogi.indonesia@gmail.com?subject=${subject}&body=${body}`, '_self');
+  };
+
   const inputClass =
-    'w-full px-4 py-3 rounded-xl bg-white border border-border text-foreground placeholder-muted-foreground/40 focus:outline-none focus:border-imogi-secondary focus:ring-1 focus:ring-imogi-secondary/50 transition-all text-sm';
+    'w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder-slate-300 focus:outline-none focus:border-imogi-secondary focus:ring-1 focus:ring-imogi-secondary/50 transition-all text-sm [&:not(:placeholder-shown)]:bg-slate-50 [&:not(:placeholder-shown)]:border-slate-300 [&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_rgb(248,250,252)] [&:-webkit-autofill]:[-webkit-text-fill-color:rgb(30,41,59)]';
 
   return (
-    <section id="kontak" className="py-20 md:py-28 relative overflow-hidden bg-white">
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-imogi-secondary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-imogi-accent/5 rounded-full blur-3xl" />
+    <section
+      id="kontak"
+      className="py-10 md:py-14 relative overflow-hidden bg-white"
+    >
+      {/* Logo watermark */}
+      <div className="absolute inset-0 flex items-start justify-center pt-4 pointer-events-none select-none">
+        <img src="/logo.png" alt="" className="w-96 h-96 object-contain opacity-[0.04]" />
+      </div>
 
-      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-imogi-secondary/10 text-imogi-secondary text-sm font-medium mb-4">
-            Hubungi Kami
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Siap Memulai Transformasi Digital?
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Isi formulir di bawah dan pesan Anda akan langsung terkirim ke WhatsApp kami.
-          </p>
-        </motion.div>
+      {/* Geometric triangles — bottom right */}
+      <div className="absolute bottom-0 right-0 pointer-events-none select-none overflow-hidden w-80 h-80">
+        <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+          <polygon points="320,320 160,320 320,160" fill="#CBD5E1" fillOpacity="0.4" />
+          <polygon points="320,320 220,320 320,220" fill="#94A3B8" fillOpacity="0.3" />
+          <polygon points="320,320 270,320 320,270" fill="#64748B" fillOpacity="0.2" />
+          <polygon points="320,160 200,320 320,320" fill="#E2E8F0" fillOpacity="0.3" />
+        </svg>
+      </div>
 
-        {/* Email, WhatsApp & Location Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-col items-center gap-3 mb-10"
-        >
-          <a
-            href="mailto:imogi.indonesia@gmail.com"
-            className="group flex items-center gap-3 px-5 py-3 rounded-xl bg-card border border-border hover:border-imogi-secondary/30 hover:shadow-md transition-all duration-300"
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+
+          {/* Left — Heading & Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow group-hover:scale-110 transition-transform">
-              <Mail className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <div className="text-xs text-muted-foreground">Email</div>
-              <div className="text-sm font-semibold text-foreground group-hover:text-imogi-secondary transition-colors">
-                imogi.indonesia@gmail.com
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 mb-4 leading-tight">
+              Konsultasi Gratis ERPNext
+              <br />
+              untuk Bisnis Anda
+            </h2>
+            <p className="text-slate-500 text-lg mb-10">
+              Dapatkan analisis kebutuhan dan rekomendasi solusi ERP dari tim ahli kami.
+              Tanpa komitmen, tanpa biaya.
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2 text-slate-400 text-sm pl-1">
+                <MapPin className="w-4 h-4" />
+                <span>Jakarta, Indonesia</span>
               </div>
             </div>
-          </a>
-          <div className="flex items-center gap-2 text-muted-foreground text-sm">
-            <MapPin className="w-4 h-4" />
-            <span>Jakarta, Indonesia</span>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Contact Form → WhatsApp */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="bg-muted/40 border border-border rounded-3xl p-8"
-        >
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Right — Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="bg-white border border-slate-100 rounded-3xl p-8 shadow-sm"
+          >
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm text-slate-500 mb-1.5">Nama Lengkap</label>
+                  <input
+                    name="nama"
+                    type="text"
+                    value={form.nama}
+                    onChange={handleChange}
+                    placeholder="John Doe"
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-500 mb-1.5">Perusahaan</label>
+                  <input
+                    name="perusahaan"
+                    type="text"
+                    value={form.perusahaan}
+                    onChange={handleChange}
+                    placeholder="PT. Contoh"
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm text-slate-500 mb-1.5">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="john@company.com"
+                    className={inputClass}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-slate-500 mb-1.5">No. Telepon</label>
+                  <input
+                    name="telepon"
+                    type="tel"
+                    value={form.telepon}
+                    onChange={handleChange}
+                    placeholder="+62 812 3456 7890"
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-sm text-muted-foreground mb-1.5">Nama Lengkap</label>
-                <input
-                  name="nama"
-                  type="text"
-                  value={form.nama}
+                <label className="block text-sm text-slate-500 mb-1.5">Solusi yang Diminati</label>
+                <select
+                  name="solusi"
+                  value={form.solusi}
                   onChange={handleChange}
-                  placeholder="John Doe"
-                  className={inputClass}
+                  className={`w-full px-4 py-3 rounded-xl border transition-all text-sm appearance-none focus:outline-none focus:border-imogi-secondary focus:ring-1 focus:ring-imogi-secondary/50 ${form.solusi ? 'bg-slate-50 border-slate-300 text-slate-800' : 'bg-white border-slate-200 text-slate-400'}`}
+                >
+                  <option value="">Pilih solusi...</option>
+                  <option value="konstruksi">ERPNext untuk Konstruksi</option>
+                  <option value="fleet">ERPNext untuk Fleet Management</option>
+                  <option value="bengkel">ERPNext untuk Bengkel</option>
+                  <option value="custom">Kustomisasi Lainnya</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm text-slate-500 mb-1.5">Pesan</label>
+                <textarea
+                  name="pesan"
+                  rows={4}
+                  value={form.pesan}
+                  onChange={handleChange}
+                  placeholder="Ceritakan kebutuhan Anda..."
+                  className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-800 placeholder-slate-300 focus:outline-none focus:border-imogi-secondary focus:ring-1 focus:ring-imogi-secondary/50 transition-all text-sm resize-none [&:not(:placeholder-shown)]:bg-slate-50 [&:not(:placeholder-shown)]:border-slate-300"
                 />
               </div>
-              <div>
-                <label className="block text-sm text-muted-foreground mb-1.5">Perusahaan</label>
-                <input
-                  name="perusahaan"
-                  type="text"
-                  value={form.perusahaan}
-                  onChange={handleChange}
-                  placeholder="PT. Contoh"
-                  className={inputClass}
-                />
+
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white gap-2 h-12 rounded-xl text-sm font-semibold"
+                >
+                  <WhatsAppIcon className="w-5 h-5" />
+                  WhatsApp
+                </Button>
+                <Button
+                  type="button"
+                  size="lg"
+                  onClick={handleEmailSubmit}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 h-12 rounded-xl text-sm font-semibold"
+                >
+                  <Mail className="w-5 h-5" />
+                  Email
+                </Button>
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm text-muted-foreground mb-1.5">Email</label>
-                <input
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="john@company.com"
-                  className={inputClass}
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-muted-foreground mb-1.5">No. Telepon</label>
-                <input
-                  name="telepon"
-                  type="tel"
-                  value={form.telepon}
-                  onChange={handleChange}
-                  placeholder="+62 812 3456 7890"
-                  className={inputClass}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm text-muted-foreground mb-1.5">Solusi yang Diminati</label>
-              <select
-                name="solusi"
-                value={form.solusi}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-border text-foreground focus:outline-none focus:border-imogi-secondary focus:ring-1 focus:ring-imogi-secondary/50 transition-all text-sm appearance-none"
-              >
-                <option value="">Pilih solusi...</option>
-                <option value="konstruksi">ERPNext untuk Konstruksi</option>
-                <option value="fleet">ERPNext untuk Fleet Management</option>
-                <option value="bengkel">ERPNext untuk Bengkel</option>
-                <option value="custom">Kustomisasi Lainnya</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm text-muted-foreground mb-1.5">Pesan</label>
-              <textarea
-                name="pesan"
-                rows={4}
-                value={form.pesan}
-                onChange={handleChange}
-                placeholder="Ceritakan kebutuhan Anda..."
-                className="w-full px-4 py-3 rounded-xl bg-white border border-border text-foreground placeholder-muted-foreground/40 focus:outline-none focus:border-imogi-secondary focus:ring-1 focus:ring-imogi-secondary/50 transition-all text-sm resize-none"
-              />
-            </div>
-
-            <Button
-              type="submit"
-              size="lg"
-              className="w-full bg-green-600 hover:bg-green-700 text-white gap-2 h-12 rounded-xl text-base font-semibold"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              Kirim via WhatsApp
-            </Button>
-          </form>
-        </motion.div>
+            </form>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

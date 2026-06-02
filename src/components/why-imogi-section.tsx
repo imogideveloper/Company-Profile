@@ -6,7 +6,7 @@ import { Unlock, Shield } from 'lucide-react';
 
 export default function WhyImogiSection() {
   return (
-    <section id="tentang" className="py-20 md:py-28 bg-muted/30">
+    <section id="tentang" className="py-10 md:py-14 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left */}

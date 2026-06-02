@@ -14,11 +14,9 @@ interface ErpFeature {
 
 const features: ErpFeature[] = [
   { name: 'Lisensi', sap: 'Mahal (Rp 500jt+)', oracle: 'Mahal (Rp 400jt+)', dynamics: 'Sedang (Rp 300jt+)', erpnext: 'Gratis (Open Source)' },
-  { name: 'Kustomisasi', sap: false, oracle: false, dynamics: false, erpnext: true },
   { name: 'Source Code', sap: false, oracle: false, dynamics: false, erpnext: true },
   { name: 'Vendor Lock-in', sap: true, oracle: true, dynamics: true, erpnext: false },
-  { name: 'Biaya Implementasi', sap: 'Sangat Tinggi', oracle: 'Tinggi', dynamics: 'Sedang', erpnext: 'Terjangkau' },
-  { name: 'Biaya Tahunan', sap: 'Rp 100jt+', oracle: 'Rp 80jt+', dynamics: 'Rp 60jt+', erpnext: 'Rp 0' },
+  { name: 'Biaya Implementasi', sap: 'Sangat Tinggi', oracle: 'Tinggi', dynamics: 'Sedang', erpnext: 'Sangat Terjangkau' },
   { name: 'Modul Lengkap', sap: true, oracle: true, dynamics: true, erpnext: true },
   { name: 'Dukungan Lokal', sap: false, oracle: false, dynamics: false, erpnext: true },
   { name: 'Implementasi Cepat', sap: false, oracle: false, dynamics: false, erpnext: true },
@@ -47,7 +45,7 @@ function CellValue({ value }: { value: boolean | string }) {
 
 export default function ErpComparisonSection() {
   return (
-    <section className="py-20 md:py-28 bg-muted/30">
+    <section className="py-10 md:py-14 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -87,17 +85,17 @@ export default function ErpComparisonSection() {
             <table className="w-full">
               <thead>
                 <tr>
-                  <th className="text-left p-4 bg-muted/50 text-sm font-semibold text-foreground w-48">
+                  <th className="text-left p-3 bg-muted/50 text-sm font-semibold text-foreground w-44 border-r border-border/75">
                     Fitur
                   </th>
-                  {erpColumns.map((col) => (
+                  {erpColumns.map((col, i) => (
                     <th
                       key={col.key}
-                      className={`p-4 text-center text-sm font-semibold ${
+                      className={`p-3 text-center text-sm font-semibold ${
                         col.highlighted
                           ? 'bg-imogi-secondary text-white'
                           : 'bg-muted/50 text-foreground'
-                      }`}
+                      } ${i < erpColumns.length - 1 ? 'border-r border-border/25' : ''}`}
                     >
                       <div className="flex flex-col items-center gap-1">
                         {col.highlighted && (
@@ -116,19 +114,19 @@ export default function ErpComparisonSection() {
                 {features.map((feature, idx) => (
                   <tr
                     key={feature.name}
-                    className={idx % 2 === 0 ? 'bg-card' : 'bg-muted/20'}
+                    className={`${idx % 2 === 0 ? 'bg-card' : 'bg-muted/20'} ${idx < 6 ? 'border-b border-border/20' : ''}`}
                   >
-                    <td className="p-4 text-sm font-medium text-foreground">
+                    <td className="p-4 text-sm font-medium text-foreground border-r border-border/25">
                       {feature.name}
                     </td>
-                    {erpColumns.map((col) => {
+                    {erpColumns.map((col, i) => {
                       const value = feature[col.key as ErpKey];
                       return (
                         <td
                           key={col.key}
                           className={`p-4 text-center ${
                             col.highlighted ? 'bg-imogi-secondary/5' : ''
-                          }`}
+                          } ${i < erpColumns.length - 1 ? 'border-r border-border/25' : ''}`}
                         >
                           <CellValue value={value} />
                         </td>

@@ -67,7 +67,7 @@ export default function TestimonialsSection() {
   const next = () => setCurrent((c) => (c >= total - 1 ? 0 : c + 1));
 
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden bg-white">
+    <section className="py-10 md:py-14 relative overflow-hidden bg-white">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-imogi-secondary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-imogi-accent/5 rounded-full blur-3xl" />
