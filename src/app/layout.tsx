@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "IMOGI - Implementor ERPNext Terpercaya di Indonesia | PT. Inovasi Terbaik Bangsa",
+  icons: {
+    icon: "/imogi.png",
+  },
   description:
     "IMOGI adalah implementor ERPNext terpercaya untuk bisnis konstruksi, transportasi, dan otomotif Indonesia. Solusi ERP cerdas & otomatis untuk fleet management, bengkel, dan manajemen proyek.",
   keywords: [
