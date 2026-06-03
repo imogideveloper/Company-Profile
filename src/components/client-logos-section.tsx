@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 const clients = [
   { name: 'PT Pratama Putra Otomotif', icon: Wrench, image: '/ppo.png', iconColor: 'text-emerald-600', scale: 4 },
   { name: 'PT Tiga Perkasa Teknik', icon: Building2, image: '/tpt.png', iconColor: 'text-blue-600', scale: 1 },
-  { name: 'PT Pemuda Patriot Rentalindo', icon: Truck, image: '/ppt.png', iconColor: 'text-amber-600', scale: 1 },
+  { name: 'PT Pemuda Patriot Rentalindo', icon: Truck, image: '/ppr.png', iconColor: 'text-amber-600', scale: 1 },
 ];
 
 function ClientLogo({ client }: { client: typeof clients[number] }) {
