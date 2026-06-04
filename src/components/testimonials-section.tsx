@@ -8,7 +8,6 @@ interface Testimonial {
   name: string;
   title: string;
   company: string;
-  initials: string;
   color: string;
   content: string;
   rating: number;
@@ -19,7 +18,6 @@ const testimonials: Testimonial[] = [
     name: 'Joko Purnomo',
     title: 'Pemilik',
     company: 'PT Pratama Putra Otomotif',
-    initials: 'AW',
     color: 'from-emerald-400 to-emerald-600',
     content: 'Sistem antrian digital dan inventory suku cadang dari IMOGI Bengkel sangat membantu. Mekanik lebih produktif, pelanggan lebih puas dengan estimasi biaya yang transparan.',
     rating: 5,
@@ -28,7 +26,6 @@ const testimonials: Testimonial[] = [
     name: 'Yugo Risna Atmaja',
     title: 'Direktur Operasional',
     company: 'PT Tiga Perkasa Teknik',
-    initials: 'BS',
     color: 'from-blue-400 to-blue-600',
     content: 'Setelah implementasi IMOGI Konstruksi, proses RAB dan progress claim kami jauh lebih cepat dan akurat. Tidak ada lagi kesalahan hitung manual yang merugikan perusahaan.',
     rating: 5,
@@ -37,7 +34,6 @@ const testimonials: Testimonial[] = [
     name: 'Sudirno Bejo Selawase',
     title: 'General Manager',
     company: 'PT Pemuda Patriot Rentalindo',
-    initials: 'SR',
     color: 'from-amber-400 to-amber-600',
     content: 'IMOGI Fleet mengubah cara kami mengelola armada. Dispatch yang dulunya pakai WhatsApp sekarang otomatis, dan kami bisa tracking GPS setiap unit secara real-time.',
     rating: 5,
