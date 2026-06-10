@@ -21,6 +21,21 @@ const slides = [
     subtitle: 'Antrian digital, inventory suku cadang, manajemen mekanik, jaga mekanik, dan billing otomatis untuk bengkel modern.',
     image: '/hero-bengkel.png',
   },
+  {
+    headline: 'IMOGI Workshop — Kelola Bengkel Lebih Mudah',
+    subtitle: 'Work order, booking service, sparepart inventory, customer management, hingga invoice & laporan bengkel — dalam satu sistem modern dan mudah digunakan.',
+    image: '/hero-pos-bengkel.png',
+  },
+  {
+    headline: 'IMOGI POS Retail — Solusi Kasir Retail Modern',
+    subtitle: 'Transaksi lebih cepat, kelola stok & inventori, laporan akurat real-time, dan kelola pelanggan untuk toko & bisnis Anda.',
+    image: '/hero-pos-retail.png',
+  },
+  {
+    headline: 'IMOGI F&B — Kasir Modern untuk Bisnis',
+    subtitle: 'Order lebih cepat, dapur lebih terorganisir, kitchen display, stock & recipe, hingga laporan lengkap untuk restoran, kafe, dan bisnis kuliner Anda.',
+    image: '/hero-pos-fnb.png',
+  },
 ];
 
 const badges = [
@@ -44,7 +59,7 @@ export default function HeroSection() {
   return (
     <section
       id="beranda"
-      className="relative h-[85vh] pt-[72px] overflow-hidden bg-slate-900"
+      className="relative h-[85vh] pt-16 md:pt-20 overflow-hidden bg-slate-900"
     >
       {/* Background Images — crossfade CSS, tanpa flash */}
       {slides.map((slide, idx) => (

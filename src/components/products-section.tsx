@@ -8,6 +8,8 @@ import {
   Building2,
   Truck,
   Wrench,
+  ShoppingCart,
+  Store,
   X,
   Check,
   ChevronRight,
@@ -119,16 +121,87 @@ const products: Product[] = [
 
 ];
 
+interface ImogiProduct {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  icon: React.ElementType;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+  hoverBgColor: string;
+  features: string[];
+}
+
+const imogiProducts: ImogiProduct[] = [
+  {
+    id: 'pos',
+    name: 'IMOGI POS',
+    subtitle: 'Sistem Kasir & Point of Sale',
+    description:
+      'Aplikasi kasir digital untuk retail, F&B, dan UMKM — transaksi cepat, manajemen stok real-time, dan laporan penjualan otomatis dalam satu sistem.',
+    icon: Store,
+    color: 'text-imogi-secondary',
+    bgColor: 'bg-blue-50',
+    borderColor: 'border-blue-200',
+    hoverBgColor: 'hover:bg-blue-50',
+    features: [
+      'Transaksi cepat & mode offline',
+      'Manajemen stok real-time',
+      'Multi-outlet & multi-kasir',
+      'Laporan penjualan otomatis',
+    ],
+  },
+  {
+    id: 'retail',
+    name: 'IMOGI Retail',
+    subtitle: 'Manajemen Toko & Distribusi',
+    description:
+      'Platform manajemen retail terintegrasi untuk mengelola inventory, pembelian, multi-cabang, dan promo — terhubung langsung dengan IMOGI Pos.',
+    icon: ShoppingCart,
+    color: 'text-amber-600',
+    bgColor: 'bg-amber-50',
+    borderColor: 'border-amber-200',
+    hoverBgColor: 'hover:bg-amber-50',
+    features: [
+      'Inventory multi-gudang & cabang',
+      'Purchasing & manajemen supplier',
+      'Promo & diskon otomatis',
+      'Integrasi penuh dengan IMOGI Pos',
+    ],
+  },
+  {
+    id: 'workshop',
+    name: 'IMOGI Workshop',
+    subtitle: 'Manajemen Operasional Bengkel',
+    description:
+      'Sistem manajemen bengkel — antrian digital, work order, inventory suku cadang, manajemen mekanik, hingga billing dan riwayat servis pelanggan.',
+    icon: Wrench,
+    color: 'text-emerald-600',
+    bgColor: 'bg-emerald-50',
+    borderColor: 'border-emerald-200',
+    hoverBgColor: 'hover:bg-emerald-50',
+    features: [
+      'Antrian & service order digital',
+      'Inventory suku cadang otomatis',
+      'Manajemen mekanik & workload',
+      'Billing & riwayat servis pelanggan',
+    ],
+  },
+];
+
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const Icon = product.icon;
 
   return (
     <motion.div
+      id={product.id}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="group"
+      className="group scroll-mt-24"
     >
       <div className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-imogi-secondary/5 transition-all duration-500">
         <div className="flex flex-col lg:flex-row">
@@ -251,6 +324,55 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
+function ImogiProductCard({ product, index }: { product: ImogiProduct; index: number }) {
+  const Icon = product.icon;
+
+  return (
+    <motion.div
+      id={product.id}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      className="group scroll-mt-24 bg-card border border-border rounded-2xl p-6 lg:p-8 flex flex-col hover:shadow-xl hover:shadow-imogi-secondary/5 hover:-translate-y-1 transition-all duration-500"
+    >
+      <div className="flex items-center gap-4 mb-5">
+        <div className={`w-12 h-12 rounded-xl ${product.bgColor} flex items-center justify-center shrink-0`}>
+          <Icon className={`w-6 h-6 ${product.color}`} />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-foreground mb-1">{product.name}</h3>
+          <p className={`text-sm font-medium ${product.color}`}>{product.subtitle}</p>
+        </div>
+      </div>
+
+      <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+        {product.description}
+      </p>
+
+      <ul className="space-y-2.5 mb-8 flex-1">
+        {product.features.map((feature) => (
+          <li key={feature} className="flex items-start gap-2 text-sm text-muted-foreground">
+            <Check className={`w-4 h-4 ${product.color} mt-0.5 shrink-0`} />
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      <Button
+        variant="outline"
+        className={`${product.borderColor} ${product.color} ${product.hoverBgColor} gap-1 w-full justify-center`}
+        asChild
+      >
+        <a href="#kontak">
+          Pelajari Lebih Lanjut
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </Button>
+    </motion.div>
+  );
+}
+
 export default function ProductsSection() {
   return (
     <section id="layanan" className="py-10 md:py-14">
@@ -284,6 +406,39 @@ export default function ProductsSection() {
         <div className="space-y-8">
           {products.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
+          ))}
+        </div>
+
+        {/* Ekosistem Produk - IMOGI Pos, Retail, Workshop */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mt-20 mb-4"
+        >
+          <Badge variant="outline" className="mb-4">
+            EKOSISTEM PRODUK
+          </Badge>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Produk Siap Pakai dari IMOGI
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Aplikasi bisnis berbasis ERPNext yang dapat langsung digunakan untuk operasional harian Anda
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          {imogiProducts.map((product, index) => (
+            <ImogiProductCard key={product.id} product={product} index={index} />
           ))}
         </div>
       </div>

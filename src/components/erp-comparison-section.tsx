@@ -35,9 +35,9 @@ type ErpKey = typeof erpColumns[number]['key'];
 function CellValue({ value }: { value: boolean | string }) {
   if (typeof value === 'boolean') {
     return value ? (
-      <Check className="w-5 h-5 text-green-500 mx-auto" />
+      <Check className="w-5 h-5 text-green-500" />
     ) : (
-      <X className="w-5 h-5 text-red-400 mx-auto" />
+      <X className="w-5 h-5 text-red-400" />
     );
   }
   return <span className="text-sm text-foreground">{value}</span>;
@@ -124,11 +124,13 @@ export default function ErpComparisonSection() {
                       return (
                         <td
                           key={col.key}
-                          className={`p-4 text-center ${
+                          className={`p-4 ${
                             col.highlighted ? 'bg-imogi-secondary/5' : ''
                           } ${i < erpColumns.length - 1 ? 'border-r border-border/25' : ''}`}
                         >
-                          <CellValue value={value} />
+                          <div className="flex items-center justify-center">
+                            <CellValue value={value} />
+                          </div>
                         </td>
                       );
                     })}
@@ -154,7 +156,7 @@ export default function ErpComparisonSection() {
                   : 'border-border bg-card'
               }`}
             >
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex flex-col items-center gap-2 mb-4 text-center">
                 {col.highlighted && (
                   <Badge className="bg-imogi-secondary text-white border-0 gap-1">
                     <Star className="w-3 h-3" />
@@ -165,9 +167,11 @@ export default function ErpComparisonSection() {
               </div>
               <div className="space-y-3">
                 {features.map((feature) => (
-                  <div key={feature.name} className="flex justify-between items-center">
+                  <div key={feature.name} className="flex justify-between items-center gap-4">
                     <span className="text-sm text-muted-foreground">{feature.name}</span>
-                    <CellValue value={feature[col.key as ErpKey]} />
+                    <div className="shrink-0 flex items-center justify-end">
+                      <CellValue value={feature[col.key as ErpKey]} />
+                    </div>
                   </div>
                 ))}
               </div>

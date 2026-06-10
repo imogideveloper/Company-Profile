@@ -68,8 +68,8 @@ export default function ProcessSection() {
 
         {/* Steps */}
         <div className="relative">
-          {/* Connecting line - desktop */}
-          <div className="hidden md:block absolute top-16 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-imogi-secondary/20 via-imogi-secondary to-imogi-secondary/20" />
+          {/* Connecting line - desktop (sits behind icons, visible only between cards) */}
+          <div className="hidden md:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-imogi-secondary/20 via-imogi-secondary to-imogi-secondary/20" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 md:gap-4">
             {steps.map((step, idx) => {
