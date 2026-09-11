@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const WA_NUMBER = '6285311552401';
+const WA_NUMBER = '6285219349090';
 
 export default function WhatsAppFloat() {
   const [tooltip, setTooltip] = useState(true);
