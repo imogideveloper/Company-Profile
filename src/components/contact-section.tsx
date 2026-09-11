@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const WA_NUMBER = '6285311552401';
+const WA_NUMBER = '6285219349090';
 
 const solutionLabels: Record<string, string> = {
   konstruksi: 'ERPNext untuk Konstruksi',
